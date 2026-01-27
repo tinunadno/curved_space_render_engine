@@ -84,6 +84,7 @@ void initPerFrameRender(
 {
     renderInternal::initRender(camera,
         [&ff](GLFWRenderer& renderer, std::size_t frame, const std::size_t time) {
+            renderer.clear();
             ff(renderer, frame, time);
         },
         efu,

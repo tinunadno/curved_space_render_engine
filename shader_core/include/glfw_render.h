@@ -140,6 +140,23 @@ public:
         return _renderHeight;
     }
 
+    void clear(const utils::Vec<float, 3>& color = utils::Vec<float, 3>(0.f, 0.f, 0.f))
+    {
+        const unsigned char r =
+            static_cast<unsigned char>(std::clamp(color[0], 0.f, 1.f) * 255.f);
+        const unsigned char g =
+            static_cast<unsigned char>(std::clamp(color[1], 0.f, 1.f) * 255.f);
+        const unsigned char b =
+            static_cast<unsigned char>(std::clamp(color[2], 0.f, 1.f) * 255.f);
+
+        for (std::size_t i = 0; i < _buffer.size(); i += 3)
+        {
+            _buffer[i + 0] = r;
+            _buffer[i + 1] = g;
+            _buffer[i + 2] = b;
+        }
+    }
+
 private:
     std::size_t _renderWidth;
     std::size_t _renderHeight;

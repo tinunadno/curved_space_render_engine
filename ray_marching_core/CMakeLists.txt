@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 project(ray_marching_core LANGUAGES CXX)
 
-add_library(ray_marching_core INTERFACE
-        include/shading/material.h
-        include/curvature/icurvature.h
-        include/curvature/spherical_curvature.h)
+add_library(ray_marching_core INTERFACE)
 
 target_include_directories(ray_marching_core
         INTERFACE
