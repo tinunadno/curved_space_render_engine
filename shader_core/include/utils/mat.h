@@ -57,6 +57,22 @@ public:
         : _data{ static_cast<NumericT>(std::forward<Args>(args))... }
     {}
 
+    static Mat zeros() {
+        Mat<NumericT, Rows, Cols> r;
+        for (std::size_t i = 0; i < Rows * Cols; ++i)
+            r._data[i] = NumericT(0);
+        return r;
+    }
+
+    static Mat identity() {
+        Mat<NumericT, Rows, Cols> r;
+        for (std::size_t i = 0; i < Rows * Cols; ++i)
+            r._data[i] = NumericT(0);
+        for (std::size_t i = 0; i < std::min(Rows, Cols); ++i)
+            r._data[i] = NumericT(1);
+        return r;
+    }
+
     NumericT& operator()(std::size_t r, std::size_t c)
     {
 #ifndef NDEBUG

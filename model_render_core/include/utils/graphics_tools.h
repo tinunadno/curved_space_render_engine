@@ -1,6 +1,5 @@
 #pragma once
 #include "glfw_render.h"
-#include "polygon_distance.h"
 
 namespace mrc::gt
 {
@@ -109,13 +108,28 @@ void drawTriangle(
 template<typename NumericT>
 void drawTriangleByZBuffer(
     sc::GLFWRenderer& renderer,
-    const sc::utils::Vec<NumericT, 2>& v0,
-    const sc::utils::Vec<NumericT, 2>& v1,
-    const sc::utils::Vec<NumericT, 2>& v2,
+    const Model<NumericT>& model,
+    const std::vector<sc::utils::Vec<NumericT, 3>>& verticies,
+    std::size_t faceIdx,
     const sc::utils::Vec<NumericT, 3>& color,
     const sc::Camera<NumericT, sc::VecArray>& camera,
-    std::vector<std::vector<NumericT>>& zBuffer)
+    std::vector<std::vector<NumericT>>& zBuffer,
+    const sc::utils::Mat<NumericT, 4, 4>& viewProj)
 {
+    const auto poly = model.getPolygon(faceIdx, verticies);
+
+    const auto pv0 = projectVertex(poly[0], viewProj, camera);
+    const auto pv1 = projectVertex(poly[1], viewProj, camera);
+    const auto pv2 = projectVertex(poly[2], viewProj, camera);
+
+    if (pv0.invW <= 0 || pv1.invW <= 0 || pv2.invW <= 0) {
+        return;
+    }
+
+    const sc::utils::Vec<NumericT, 2>& v0 = pv0.pixel;
+    const sc::utils::Vec<NumericT, 2>& v1 = pv1.pixel;
+    const sc::utils::Vec<NumericT, 2>& v2 = pv2.pixel;
+
     int tmp = std::min({v0[0], v1[0], v2[0]});
     const int minX = std::max(0,tmp);
 
@@ -128,28 +142,32 @@ void drawTriangleByZBuffer(
     tmp = std::max({v0[1], v1[1], v2[1]});
     const int maxY = std::min( static_cast<int>(renderer.getRenderHeight()) - 1, tmp);
 
-    const int area = edgeFunction(v0, v1, v2);
+    const NumericT area = edgeFunction(v0, v1, v2);
     if (area == 0)
         return;
+    NumericT invArea = NumericT(1.0) / area;
 
     for (int y = minY; y <= maxY; ++y)
     {
         for (int x = minX; x <= maxX; ++x)
         {
-            sc::utils::Vec<NumericT, 2> p{x, y};
-
-            int w0 = edgeFunction(v1, v2, p);
-            int w1 = edgeFunction(v2, v0, p);
-            int w2 = edgeFunction(v0, v1, p);
-
-            if ((w0 >= 0 && w1 >= 0 && w2 >= 0 && area > 0) ||
-                (w0 <= 0 && w1 <= 0 && w2 <= 0 && area < 0))
+            sc::utils::Vec<NumericT, 2> p{(NumericT)x + 0.5f, (NumericT)y + 0.5f };
+            NumericT w0 = edgeFunction(v1, v2, p) * invArea;
+            NumericT w1 = edgeFunction(v2, v0, p) * invArea;
+            NumericT w2 = edgeFunction(v0, v1, p) * invArea;
+            if ((area > 0 && w0 >= 0 && w1 >= 0 && w2 >= 0) ||
+                (area < 0 && w0 <= 0 && w1 <= 0 && w2 <= 0))
             {
-                sc::PixelSample<NumericT> ps = camera.getPixelSample(w0, w1, w2);
-                NumericT distance = getDistanceFromRayToPoly(ps, v0, v1, v2);
-                if (zBuffer[y][x] > distance)
+                NumericT absw0 = std::abs(w0);
+                NumericT absw1 = std::abs(w1);
+                NumericT absw2 = std::abs(w2);
+
+                float baryInvW = pv0.invW * absw0 + pv1.invW * absw1 + pv2.invW * absw2;
+                float currentZ = 1.0f / baryInvW;
+
+                if (currentZ > 0 && currentZ < zBuffer[y][x])
                 {
-                    zBuffer[y][x] = distance;
+                    zBuffer[y][x] = currentZ;
                     renderer.setPixel(x, y, color);
                 }
             }

@@ -317,8 +317,7 @@ rotateAroundAxis(
 }
 
 template<typename T, typename C>
-Vec<T, 3, C>
-getCos(const Vec<T, 3, C>& a,
+T getCos(const Vec<T, 3, C>& a,
         const Vec<T, 3, C>& b)
 {
     return dot(a, b) / (len(a) * len(b));

@@ -7,7 +7,8 @@
 #include <fcntl.h>
 #include <iostream>
 #include <unistd.h>
-#include <stdlib.h>
+
+#include "point_projection.h"
 
 namespace mrc {
 
@@ -26,7 +27,6 @@ public:
         _pos(),
         _rot()
     {}
-
 
     ~Model() = default;
 
@@ -62,7 +62,15 @@ public:
     sc::utils::Vec<NumericT, 3>& pos() {return _pos;}
     sc::utils::Vec<NumericT, 3>& rot() {return _rot;}
 
+    std::array<sc::utils::Vec<NumericT, 3>, 3> getPolygon(std::size_t faceIdx,
+        const std::vector<sc::utils::Vec<NumericT, 3>>& vertSource) const {
+        return {vertSource[_faces[faceIdx][0][0]],
+                vertSource[_faces[faceIdx][1][0]],
+                vertSource[_faces[faceIdx][2][0]]};
+    }
+
 private:
+
 
     std::vector<sc::utils::Vec<NumericT, 3>> _verticies;
     std::vector<sc::utils::Vec<NumericT, 2>> _uv;
@@ -113,14 +121,12 @@ Model<NumericT> readFromObjFile(
     std::vector<typename Model<NumericT>::Face> faces;
 
     while (ptr < end) {
-        // пропускаем пробелы и пустые строки
         while (ptr < end && (*ptr == ' ' || *ptr == '\n' || *ptr == '\r' || *ptr == '\t'))
             ++ptr;
 
         if (ptr >= end)
             break;
 
-        // ---------- vertex ----------
         if (*ptr == 'v' && *(ptr + 1) == ' ') {
             ptr += 2;
             NumericT x = std::strtod(ptr, const_cast<char**>(&ptr));
@@ -128,14 +134,14 @@ Model<NumericT> readFromObjFile(
             NumericT z = std::strtod(ptr, const_cast<char**>(&ptr));
             verticies.emplace_back(x, y, z);
         }
-        // ---------- texture coord ----------
+
         else if (*ptr == 'v' && *(ptr + 1) == 't') {
             ptr += 3;
             NumericT u = std::strtod(ptr, const_cast<char**>(&ptr));
             NumericT v = std::strtod(ptr, const_cast<char**>(&ptr));
             uv.emplace_back(u, v);
         }
-        // ---------- normal ----------
+
         else if (*ptr == 'v' && *(ptr + 1) == 'n') {
             ptr += 3;
             NumericT x = std::strtod(ptr, const_cast<char**>(&ptr));
@@ -143,22 +149,20 @@ Model<NumericT> readFromObjFile(
             NumericT z = std::strtod(ptr, const_cast<char**>(&ptr));
             normals.emplace_back(x, y, z);
         }
-        // ---------- face ----------
+
         else if (*ptr == 'f' && *(ptr + 1) == ' ') {
             ptr += 2;
 
             typename Model<NumericT>::Face face{};
 
             for (int i = 0; i < 3; ++i) {
-                // v index
+
                 face[i][0] = std::strtol(ptr, const_cast<char**>(&ptr), 10) - 1;
                 ++ptr; // skip '/'
 
-                // vt index
                 face[i][1] = std::strtol(ptr, const_cast<char**>(&ptr), 10) - 1;
                 ++ptr; // skip '/'
 
-                // vn index
                 face[i][2] = std::strtol(ptr, const_cast<char**>(&ptr), 10) - 1;
             }
 
@@ -174,11 +178,11 @@ Model<NumericT> readFromObjFile(
 
     Model<NumericT> model;
     model.verticies() = std::move(verticies);
-    model.uv()        = std::move(uv);
-    model.normals()   = std::move(normals);
-    model.faces()     = std::move(faces);
-    model.pos()       = pos;
-    model.rot()       = rot;
+    model.uv() = std::move(uv);
+    model.normals() = std::move(normals);
+    model.faces() = std::move(faces);
+    model.pos() = pos;
+    model.rot() = rot;
 
     return model;
 }

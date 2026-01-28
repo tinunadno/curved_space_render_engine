@@ -1,19 +1,9 @@
 #pragma once
 
 #include "camera_view.h"
-#include "utils/ray.h"
 
 namespace sc
 {
-
-template<typename NumericT>
-struct PixelSample
-{
-    std::size_t pixelY;
-    std::size_t pixelX;
-    utils::Vec<NumericT, 2> uv;
-    utils::Ray<NumericT, 3> ray;
-};
 
 template<typename NumericT>
 class internal::CameraView<NumericT>::Iterator
