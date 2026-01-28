@@ -11,6 +11,9 @@ namespace sc
 
 class GLFWRenderer
 {
+    using KeyHandler = std::function<void()>;
+    using MouseMoveHandler = std::function<void(double dx, double dy)>;
+
 public:
     GLFWRenderer(int renderResX,
                  int renderResY,
@@ -36,6 +39,10 @@ public:
         }
 
         glfwMakeContextCurrent(_window);
+
+        glfwSetWindowUserPointer(_window, this);
+        glfwSetKeyCallback(_window, &GLFWRenderer::keyCallback);
+        glfwSetCursorPosCallback(_window, &GLFWRenderer::mouseMoveCallback);
 
         // IMPORTANT: use framebuffer size, not window size (Retina-safe)
         int fbWidth = 0, fbHeight = 0;
@@ -73,7 +80,6 @@ public:
 
         glfwTerminate();
     }
-
 
     void setPixel(std::size_t x,
                   std::size_t y,
@@ -141,6 +147,16 @@ public:
         return _renderHeight;
     }
 
+    void onKey(int key, KeyHandler handler)
+    {
+        _keyHandlers[key] = std::move(handler);
+    }
+
+    void onMouseMove(MouseMoveHandler handler)
+    {
+        _mouseMoveHandler = std::move(handler);
+    }
+
     void clear(const utils::Vec<float, 3>& color = utils::Vec<float, 3>{0.f, 0.f, 0.f})
     {
         const unsigned char r =
@@ -159,6 +175,7 @@ public:
     }
 
 private:
+    std::unordered_map<int, KeyHandler> _keyHandlers;
     std::size_t _renderWidth;
     std::size_t _renderHeight;
     int _windowWidth;
@@ -167,6 +184,54 @@ private:
     std::vector<unsigned char> _buffer;
     GLFWwindow* _window = nullptr;
     unsigned int _textureId = 0;
+
+    MouseMoveHandler _mouseMoveHandler;
+
+    double _lastMouseX = 0.0;
+    double _lastMouseY = 0.0;
+    bool _firstMouse = true;
+
+    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+    {
+        if (action != GLFW_PRESS && action != GLFW_REPEAT)
+            return;
+
+        auto* self =
+            static_cast<GLFWRenderer*>(glfwGetWindowUserPointer(window));
+
+        if (!self)
+            return;
+
+        auto it = self->_keyHandlers.find(key);
+        if (it != self->_keyHandlers.end())
+            it->second();
+    }
+    static void mouseMoveCallback(GLFWwindow* window,
+                              double xpos,
+                              double ypos)
+    {
+        auto* self =
+            static_cast<GLFWRenderer*>(glfwGetWindowUserPointer(window));
+
+        if (!self || !self->_mouseMoveHandler)
+            return;
+
+        if (self->_firstMouse)
+        {
+            self->_lastMouseX = xpos;
+            self->_lastMouseY = ypos;
+            self->_firstMouse = false;
+            return;
+        }
+
+        double dx = xpos - self->_lastMouseX;
+        double dy = ypos - self->_lastMouseY;
+
+        self->_lastMouseX = xpos;
+        self->_lastMouseY = ypos;
+
+        self->_mouseMoveHandler(dx, dy);
+    }
 };
 
 

@@ -83,7 +83,22 @@ void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
         internal::renderSingleFrame(models, camera, zBuffer, renderer, viewProj);
         cd(frame, time, renderer, viewProj);
     };
-    sc::initPerFrameRender(camera, ff, {}, windowResolution, targetFrameRateMs);
+
+    std::vector<std::pair<int, std::function<void()>>> keyHandlers = {
+        {GLFW_KEY_W, [&camera](){ camera.pos()[2] -= .1f; }},
+        {GLFW_KEY_A, [&camera](){ camera.pos()[0] -= .1f; }},
+        {GLFW_KEY_S, [&camera](){ camera.pos()[2] += .1f; }},
+        {GLFW_KEY_D, [&camera](){ camera.pos()[0] += .1f; }},
+        {GLFW_KEY_LEFT_SHIFT, [&camera](){ camera.pos()[1] += .1f; }},
+        {GLFW_KEY_LEFT_CONTROL, [&camera](){ camera.pos()[1] -= .1f; }},
+    };
+
+    auto mouseHandler = [&camera](double dx, double dy) {
+      camera.rot()[0] += dx / 100.;
+      camera.rot()[2] += dy / 100.;
+    };
+
+    sc::initPerFrameRender(camera, ff, {}, keyHandlers, mouseHandler, windowResolution, targetFrameRateMs);
 }
 
 } // namespace mrc
