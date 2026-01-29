@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Release)
 
+add_compile_definitions(ENABLE_LOG)
+
 add_subdirectory(shader_core)
 add_subdirectory(shader_core_examples)
 add_subdirectory(ray_marching_core)
