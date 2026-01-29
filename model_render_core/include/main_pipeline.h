@@ -63,7 +63,8 @@ void handleCameraMovement(int axis, NumericT distance, sc::Camera<NumericT, sc::
 template<typename NumericT,
     typename EachFrameModelUpdate = decltype([](std::size_t, std::size_t){ }),
     typename CustomDrawer =
-        decltype([](std::size_t, std::size_t, sc::GLFWRenderer&, const sc::utils::Mat<NumericT, 4, 4>&){ })>
+        decltype([](std::size_t, std::size_t, sc::GLFWRenderer&, const sc::utils::Mat<NumericT, 4, 4>&,
+            const std::vector<std::vector<NumericT>>&){ })>
 void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
                    const std::vector<Model<NumericT>>& models,
                    EachFrameModelUpdate efmu = { },
@@ -99,7 +100,7 @@ void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
         auto viewProj = proj * view;
         efmu(frame, time);
         internal::renderSingleFrame(models, camera, zBuffer, renderer, viewProj);
-        cd(frame, time, renderer, viewProj);
+        cd(frame, time, renderer, viewProj, zBuffer);
     };
 
     constexpr NumericT stepSize = .5;

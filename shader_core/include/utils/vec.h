@@ -171,6 +171,14 @@ operator/(const Vec<NumericT, N, Container>& a
 
 template<typename NumericT, std::size_t N, typename Container>
 constexpr Vec<NumericT, N, Container>
+operator/=(const Vec<NumericT, N, Container>& a
+        , NumericT scalar)
+{
+    return scalarBinaryOp(a, scalar, [](const auto aa, const auto bb) { return aa / bb; });
+}
+
+template<typename NumericT, std::size_t N, typename Container>
+constexpr Vec<NumericT, N, Container>
 operator+(const Vec<NumericT, N, Container>& a
         , const Vec<NumericT, N, Container>& b)
 {

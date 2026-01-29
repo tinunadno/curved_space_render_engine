@@ -7,9 +7,6 @@
 #include <fcntl.h>
 #include <iostream>
 #include <unistd.h>
-
-#include "point_projection.h"
-
 namespace mrc {
 
 template<typename NumericT>
@@ -47,6 +44,8 @@ public:
         _pos(std::move(model._pos)),
         _rot(std::move(model._rot))
     {}
+
+    Model& operator=(const Model& model) = default;
 
     const std::vector<sc::utils::Vec<NumericT, 3>>& verticies() const {return _verticies;}
     const std::vector<sc::utils::Vec<NumericT, 2>>& uv() const {return _uv;}
