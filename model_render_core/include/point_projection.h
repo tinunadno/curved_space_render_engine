@@ -9,6 +9,7 @@ namespace mrc
 
 namespace internal
 {
+
 template <typename NumericT>
 struct ProjectedVertex {
         sc::utils::Vec<NumericT, 2> pixel; // screen space coordinates
@@ -18,33 +19,58 @@ struct ProjectedVertex {
 } // namespace internal
 
 template <typename NumericT>
-sc::utils::Mat<NumericT, 4, 4> getViewMatrix(const sc::Camera<NumericT, sc::VecArray>& cam) {
+sc::utils::Vec<NumericT, 3> worldUp{0, 1, 0};
 
+
+template<typename NumericT>
+sc::utils::Vec<NumericT, 3> getForward(const sc::utils::Vec<NumericT, 3>& rotation)
+{
+    const NumericT pitch = rotation[0];
+    const NumericT yaw   = rotation[1];
+
+    const NumericT cx = std::cos(pitch);
+    const NumericT sx = std::sin(pitch);
+    const NumericT cy = std::cos(yaw);
+    const NumericT sy = std::sin(yaw);
+    return sc::utils::norm(sc::utils::Vec<NumericT, 3>
+    {
+        cx * sy,
+        sx,
+       -cx * cy
+    });
+}
+
+template <typename NumericT>
+sc::utils::Vec<NumericT, 3> getRight(const sc::utils::Vec<NumericT, 3>& forward)
+{
+    return sc::utils::norm(sc::utils::cross(forward, worldUp<NumericT>));
+}
+
+template <typename NumericT>
+sc::utils::Vec<NumericT, 3> getUp(const sc::utils::Vec<NumericT, 3>& forward,
+    const sc::utils::Vec<NumericT, 3>& right)
+{
+    return sc::utils::cross(right, forward);
+}
+
+template <typename NumericT>
+sc::utils::Mat<NumericT, 4, 4>
+getViewMatrix(const sc::Camera<NumericT, sc::VecArray>& cam)
+{
     using Mat4 = sc::utils::Mat<NumericT, 4, 4>;
-    using Mat3 = sc::utils::Mat<NumericT, 3, 3>;
     using Vec3 = sc::utils::Vec<NumericT, 3>;
 
-    const NumericT cx = std::cos(cam.rot()[0]), sx = std::sin(cam.rot()[0]);
-    const NumericT cy = std::cos(cam.rot()[1]), sy = std::sin(cam.rot()[1]);
-    const NumericT cz = std::cos(cam.rot()[2]), sz = std::sin(cam.rot()[2]);
-
-    Mat3 Rx{1, 0, 0, 0, cx, -sx, 0, sx, cx};
-    Mat3 Ry{cy, 0, sy, 0, 1,  0, -sy, 0, cy};
-    Mat3 Rz{cz, -sz, 0, sz,  cz, 0, 0, 0, 1};
-
-    Mat3 R = Rz * Ry * Rx;
+    Vec3 forward = getForward(cam.rot());
+    Vec3 right = getRight(forward);
+    Vec3 up = getUp(forward, right);
 
     Mat4 View{
-        R(0,0), R(1,0), R(2,0), 0,
-        R(0,1), R(1,1), R(2,1), 0,
-        R(0,2), R(1,2), R(2,2), 0,
-        0,          0,          0,          1
+        right[0],    right[1],    right[2],   -sc::utils::dot(right, cam.pos()),
+        up[0],       up[1],       up[2],      -sc::utils::dot(up, cam.pos()),
+       -forward[0], -forward[1], -forward[2],  sc::utils::dot(forward, cam.pos()),
+        0,           0,           0,           1
     };
 
-    Vec3 t = -(R * cam.pos());
-    View(0,3) = t[0];
-    View(1,3) = t[1];
-    View(2,3) = t[2];
     return View;
 }
 

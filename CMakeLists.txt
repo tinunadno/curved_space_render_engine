@@ -4,7 +4,7 @@ project(curved_space_render_engine LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_BUILD_TYPE Release)
 
 add_subdirectory(shader_core)
 add_subdirectory(shader_core_examples)

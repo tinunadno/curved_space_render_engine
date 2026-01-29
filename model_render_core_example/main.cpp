@@ -14,10 +14,6 @@ int main() {
     std::vector<mrc::Model<float>> models;
     models.emplace_back(mrc::readFromObjFile<float>(objFile));
 
-    auto modelUpd = [&models](std::size_t frame, std::size_t) {
-        models[0].pos()[1] = std::sin(static_cast<float>(frame) / 100.f);
-    };
-
     auto roiDrawer = [&models, &camera](
         std::size_t,
         std::size_t,
@@ -72,7 +68,7 @@ int main() {
         }
     };
 
-    mrc::initMrcRender(camera, models, modelUpd, roiDrawer);
+    mrc::initMrcRender(camera, models, { }, roiDrawer);
 
     return 0;
 }

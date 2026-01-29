@@ -73,6 +73,16 @@ public:
         return r;
     }
 
+    Mat t() const {
+        Mat<NumericT, Cols, Rows> transposed;
+        for (std::size_t i = 0; i < Rows; ++i) {
+            for (std::size_t j = 0; j < Cols; ++j) {
+                transposed(j, i) = (*this)(i, j);
+            }
+        }
+        return transposed;
+    }
+
     NumericT& operator()(std::size_t r, std::size_t c)
     {
 #ifndef NDEBUG

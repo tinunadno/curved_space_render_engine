@@ -41,6 +41,22 @@ void renderSingleFrame(std::vector<Model<NumericT>>& models,
     }
 }
 
+template<typename NumericT>
+void handleCameraMovement(int axis, NumericT distance, sc::Camera<NumericT, sc::VecArray>& camera)
+{
+
+    const auto forward = getForward(camera.rot());
+    const auto right = getRight(forward);
+    const auto up = getUp(forward, right);
+
+    sc::utils::Vec<NumericT, 3> d{0., 0., 0.};
+    d[axis] = distance;
+
+    camera.pos() += forward * d[2];
+    camera.pos() += right * d[0];
+    camera.pos() += up * d[1];
+}
+
 } // namespace internal
 
 template<typename NumericT,
@@ -84,18 +100,21 @@ void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
         cd(frame, time, renderer, viewProj);
     };
 
+    constexpr NumericT stepSize = .5;
+    constexpr NumericT rotSize = 1. / 100.;
+
     std::vector<std::pair<int, std::function<void()>>> keyHandlers = {
-        {GLFW_KEY_W, [&camera](){ camera.pos()[2] -= .1f; }},
-        {GLFW_KEY_A, [&camera](){ camera.pos()[0] -= .1f; }},
-        {GLFW_KEY_S, [&camera](){ camera.pos()[2] += .1f; }},
-        {GLFW_KEY_D, [&camera](){ camera.pos()[0] += .1f; }},
-        {GLFW_KEY_LEFT_SHIFT, [&camera](){ camera.pos()[1] += .1f; }},
-        {GLFW_KEY_LEFT_CONTROL, [&camera](){ camera.pos()[1] -= .1f; }},
+        {GLFW_KEY_W, [&camera](){ internal::handleCameraMovement(2, NumericT(stepSize), camera); }},
+        {GLFW_KEY_A, [&camera](){ internal::handleCameraMovement(0, NumericT(-stepSize), camera); }},
+        {GLFW_KEY_S, [&camera](){ internal::handleCameraMovement(2, NumericT(-stepSize), camera); }},
+        {GLFW_KEY_D, [&camera](){ internal::handleCameraMovement(0, NumericT(stepSize), camera); }},
+        {GLFW_KEY_LEFT_SHIFT, [&camera](){ internal::handleCameraMovement(1, NumericT(stepSize), camera); }},
+        {GLFW_KEY_LEFT_CONTROL, [&camera](){ internal::handleCameraMovement(1, NumericT(-stepSize), camera); }},
     };
 
     auto mouseHandler = [&camera](double dx, double dy) {
-      camera.rot()[0] += dx / 100.;
-      camera.rot()[2] += dy / 100.;
+      camera.rot()[0] -= dy * rotSize;
+      camera.rot()[1] += dx * rotSize;
     };
 
     sc::initPerFrameRender(camera, ff, {}, keyHandlers, mouseHandler, windowResolution, targetFrameRateMs);
