@@ -67,6 +67,7 @@ void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
                    std::vector<Model<NumericT>>& models,
                    EachFrameModelUpdate efmu = { },
                    CustomDrawer cd = { },
+                   const std::vector<std::pair<int, std::function<void()>>>& customKeyHandlers = {},
                    sc::utils::Vec<int, 2> windowResolution = sc::utils::Vec<int, 2>{-1, -1},
                    unsigned int targetFrameRateMs = 60)
 {
@@ -111,6 +112,8 @@ void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
         {GLFW_KEY_LEFT_SHIFT, [&camera](){ internal::handleCameraMovement(1, NumericT(stepSize), camera); }},
         {GLFW_KEY_LEFT_CONTROL, [&camera](){ internal::handleCameraMovement(1, NumericT(-stepSize), camera); }},
     };
+
+    keyHandlers.insert(keyHandlers.end(), customKeyHandlers.begin(), customKeyHandlers.end());
 
     auto mouseHandler = [&camera](double dx, double dy) {
       camera.rot()[0] -= dy * rotSize;

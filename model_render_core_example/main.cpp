@@ -68,7 +68,11 @@ int main() {
         }
     };
 
-    mrc::initMrcRender(camera, models, { }, roiDrawer);
+    std::vector<std::pair<int, std::function<void()>>> customKeyHandlers = { // example
+        {GLFW_KEY_E, [&models] { models[0].pos()[2] += .5; }}
+    };
+
+    mrc::initMrcRender(camera, models, { }, roiDrawer, customKeyHandlers);
 
     return 0;
 }
