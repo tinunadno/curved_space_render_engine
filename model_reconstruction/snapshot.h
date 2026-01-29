@@ -81,8 +81,3 @@ inline std::vector<mrc::Model<float>> snapshotsToModels(
     }
     return models;
 }
-
-inline mrc::Model<float> intersectMrcModels(const std::vector<mrc::Model<float>>& models)
-{
-
-}
