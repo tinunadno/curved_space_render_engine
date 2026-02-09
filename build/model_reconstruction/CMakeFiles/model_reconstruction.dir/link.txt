@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/model_reconstruction.dir/main.cpp.o CMakeFiles/model_reconstruction.dir/model_intersection.cpp.o -o model_reconstruction  -Wl,-rpath,/opt/homebrew/lib -Wl,-rpath,/usr/local/lib /opt/homebrew/lib/libglfw.3.4.dylib -framework OpenGL /usr/local/lib/libmanifold.3.3.2.dylib
