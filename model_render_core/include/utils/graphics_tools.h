@@ -1,11 +1,10 @@
 #pragma once
 #include "glfw_render.h"
 #include "point_projection.h"
+#include "scene_cache.h"
 
 namespace mrc::gt
 {
-
-
 
 template<typename NumericT>
 void drawLine(
@@ -56,8 +55,6 @@ NumericT edgeFunction(
            (p[1] - a[1]) * (b[0] - a[0]);
 }
 
-
-
 template<typename NumericT>
 void drawTriangle(
     sc::GLFWRenderer& renderer,
@@ -101,10 +98,6 @@ void drawTriangle(
         }
     }
 }
-
-
-
-
 
 template<typename NumericT>
 internal::ClipVertex<NumericT> findClipCross(
@@ -185,20 +178,15 @@ bool triangleTriviallyClipped(
 }
 
 
-
-
-
-
-
-
-
 template<typename NumericT, typename FragmentShader>
 void rasterizeTriangle(
-    sc::GLFWRenderer& renderer,
     const std::array<internal::ProjectedVertex<NumericT>, 3>& tri,
-    std::vector<std::vector<NumericT>>& zBuffer,
-    const FragmentShader& shader)
+    const FragmentShader& shader,
+    internal::SceneCache<NumericT>& cache)
 {
+    auto& renderer = cache.renderer;
+    auto& zBuffer = cache.zBuffer;
+
     const auto& v0 = tri[0].pixel;
     const auto& v1 = tri[1].pixel;
     const auto& v2 = tri[2].pixel;
@@ -255,11 +243,13 @@ void rasterizeTriangle(
                     
                     auto interpAttr = (a0 * w0 + a1 * w1 + a2 * w2) * currentZ;
 
-                    FragmentInput<NumericT> frag;
-                    frag.uv       = interpAttr.uv;
-                    frag.normal   = interpAttr.normal;
-                    frag.worldPos = interpAttr.worldPos;
-                    frag.depth    = currentZ;
+                    FragmentInput<NumericT> frag{
+                        interpAttr.uv,
+                        interpAttr.normal,
+                        interpAttr.worldPos,
+                        currentZ,
+                        cache.lights
+                    };
 
                     auto color = shader(frag);
 
@@ -271,20 +261,11 @@ void rasterizeTriangle(
     }
 }
 
-
-
-
-
-
-
-
 template<typename NumericT, typename FragmentShader>
 void processTriangle(
-    sc::GLFWRenderer& renderer,
     const std::array<internal::ClipVertex<NumericT>, 3>& clipVerts,
-    const sc::Camera<NumericT, sc::VecArray>& camera,
-    std::vector<std::vector<NumericT>>& zBuffer,
-    const FragmentShader& shader)
+    const FragmentShader& shader,
+    internal::SceneCache<NumericT>& cache)
 {
     const auto& clip0 = clipVerts[0];
     const auto& clip1 = clipVerts[1];
@@ -301,6 +282,8 @@ void processTriangle(
                    static_cast<int>(clip1Out) +
                    static_cast<int>(clip2Out);
 
+    auto& camera = cache.camera;
+
     if (outCount == 1)
     {
         internal::ClipVertex<NumericT> in[2];
@@ -312,12 +295,11 @@ void processTriangle(
         if (!clip2Out) in[inIdx]   = clip2; else out = clip2;
 
         auto [tri1, tri2] = handleOneClipOut(in[0], in[1], out, camera);
-        rasterizeTriangle(renderer, tri1, zBuffer, shader);
-        rasterizeTriangle(renderer, tri2, zBuffer, shader);
+        rasterizeTriangle(tri1,shader, cache);
+        rasterizeTriangle(tri2, shader, cache);
         return;
     }
 
-    
     std::array<internal::ProjectedVertex<NumericT>, 3> targetTriangle;
     if (outCount == 2)
     {
@@ -340,7 +322,7 @@ void processTriangle(
         };
     }
 
-    rasterizeTriangle(renderer, targetTriangle, zBuffer, shader);
+    rasterizeTriangle(targetTriangle, shader, cache);
 }
 
 } 

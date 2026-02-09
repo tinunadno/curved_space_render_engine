@@ -13,6 +13,8 @@ add_library(model_render_core INTERFACE
         include/utils/graphics_tools.h
         include/utils/compute_normals.h
         include/utils/vertices_transform.h
+        include/scene_cache.h
+        include/light_source.h
 )
 
 target_include_directories(model_render_core

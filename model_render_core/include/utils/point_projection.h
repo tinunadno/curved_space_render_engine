@@ -3,11 +3,10 @@
 #include "entry_point.h"
 #include "utils/mat.h"
 #include "camera/camera.h"
+#include "light_source.h"
 
 namespace mrc
 {
-
-
 
 template<typename NumericT>
 struct FragmentInput {
@@ -15,6 +14,7 @@ struct FragmentInput {
     sc::utils::Vec<NumericT, 3> normal;
     sc::utils::Vec<NumericT, 3> worldPos;
     NumericT depth;
+    const std::vector<LightSource<NumericT>>& lights;
 };
 
 

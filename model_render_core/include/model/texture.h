@@ -48,9 +48,6 @@ struct BGRStoragePolicy {
 
 
 
-
-
-
 template<typename NumericT>
 class Texture
 {
