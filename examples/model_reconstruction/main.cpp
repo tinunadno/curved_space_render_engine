@@ -142,8 +142,8 @@ int main()
         }
     };
 
-    std::vector<std::pair<int, std::function<void()>>> keys1 = {
-        {GLFW_KEY_E, [&snapshots, &camera1, &lastRois, &snapshotsDirty]() {
+    std::vector<std::pair<std::vector<int>, std::function<void()>>> keys1 = {
+        {{GLFW_KEY_E}, [&snapshots, &camera1, &lastRois, &snapshotsDirty]() {
             for (std::size_t i = 0; i < snapshots.size(); ++i)
             {
                 std::vector<sc::utils::Vec<float, 2>> roiCopy(lastRois[i]);

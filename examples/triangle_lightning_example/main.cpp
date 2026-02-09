@@ -18,11 +18,11 @@ int main() {
     );
 
 
-    std::vector<std::pair<int, std::function<void()>>> customKeyHandlers = {
-        {GLFW_KEY_I, [&ls](){ ls[0].position[2] -= .1f; }},
-        {GLFW_KEY_J, [&ls](){ ls[0].position[0] -= .1f; }},
-        {GLFW_KEY_K, [&ls](){ ls[0].position[2] += .1f; }},
-        {GLFW_KEY_L, [&ls](){ ls[0].position[0] += .1f; }},
+    std::vector<std::pair<std::vector<int>, std::function<void()>>> customKeyHandlers = {
+        {{GLFW_KEY_I}, [&ls](){ ls[0].position[2] -= .1f; }},
+        {{GLFW_KEY_J}, [&ls](){ ls[0].position[0] -= .1f; }},
+        {{GLFW_KEY_K}, [&ls](){ ls[0].position[2] += .1f; }},
+        {{GLFW_KEY_L}, [&ls](){ ls[0].position[0] += .1f; }},
     };
 
     mrc::initMrcRender(camera, models, ls, {}, {}, customKeyHandlers);
