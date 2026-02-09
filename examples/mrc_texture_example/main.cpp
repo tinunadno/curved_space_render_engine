@@ -19,15 +19,42 @@ int main() {
         1.f
     );
 
+    bool isLightControl = false;
+    bool isObjectControl = false;
+    bool isRotation = false;
+
+    auto handleInputs = [&models, &ls, &camera, &isLightControl,
+        &isObjectControl, &isRotation](int axes, float step)
+    {
+        if (isObjectControl) {
+            if (isRotation)
+                models[0].rot()[axes] += step;
+            else
+                models[0].pos()[axes] += step;
+        } else if (isLightControl) {
+            if (isRotation)
+                ls[0].direction[axes] += step;
+            else
+                ls[0].position[axes] += step;
+        } else {
+            mrc::internal::handleCameraMovement(axes, step, camera);
+        }
+    };
+
     std::vector<std::pair<std::vector<int>, std::function<void()>>> customKeyHandlers = {
-        {{GLFW_KEY_I}, [&ls](){ ls[0].position[2] -= .1f; }},
-        {{GLFW_KEY_J}, [&ls](){ ls[0].position[0] -= .1f; }},
-        {{GLFW_KEY_K}, [&ls](){ ls[0].position[2] += .1f; }},
-        {{GLFW_KEY_L}, [&ls](){ ls[0].position[0] += .1f; }},
-        {{GLFW_KEY_U}, [&ls](){ ls[0].position[1] += .1f; }},
-        {{GLFW_KEY_O}, [&ls](){ ls[0].position[1] -= .1f; }},
-        {{80, 79}, [&ls](){ ls[0].intensity = 0.f; }},
-        {{80, 85}, [&ls](){ ls[0].intensity = 1.f; }},
+        // just changing the editors
+        {{GLFW_KEY_LEFT_ALT, GLFW_KEY_L}, [&isLightControl, &isObjectControl]()
+            { isLightControl = !isLightControl; if (isLightControl && isObjectControl) isObjectControl = false; },},
+        {{GLFW_KEY_LEFT_ALT, GLFW_KEY_O}, [&isLightControl, &isObjectControl]()
+            { isObjectControl = !isObjectControl; if (isObjectControl && isLightControl) isLightControl = false; },},
+        {{GLFW_KEY_LEFT_ALT, GLFW_KEY_R}, [&isRotation](){ isRotation = !isRotation; }},
+        // overriding default keys
+        {{GLFW_KEY_W}, [&handleInputs](){ handleInputs(2, .5f); }},
+        {{GLFW_KEY_A}, [&handleInputs](){ handleInputs(0, -.5f); }},
+        {{GLFW_KEY_S}, [&handleInputs](){ handleInputs(2, -.5f); }},
+        {{GLFW_KEY_D}, [&handleInputs](){ handleInputs(0, .5f); }},
+        {{GLFW_KEY_LEFT_SHIFT}, [&handleInputs](){ handleInputs(1, .5f); }},
+        {{GLFW_KEY_LEFT_CONTROL}, [&handleInputs](){ handleInputs(1, -.5f); }},
     };
 
 
