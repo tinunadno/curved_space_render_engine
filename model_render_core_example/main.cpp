@@ -8,9 +8,16 @@ int main() {
     const char* objFile = "/Users/yura/stuff/clion/curved_space_render_engine/model_render_core_example/monke.obj";
 
     std::vector<mrc::Model<float>> models;
+    std::vector<mrc::LightSource<float>> ls;
     models.emplace_back(mrc::io::readFromObjFile<float>(objFile));
+    ls.emplace_back(
+        sc::utils::Vec<float, 3>{0.f, 10.f, 0.f},
+        sc::utils::Vec<float, 3>{0.f, -1.f, 0.f},
+        sc::utils::Vec<float, 3>{1.f, 0.f, 0.f},
+        1.f
+    );
 
-    mrc::initMrcRender(camera, models);
+    mrc::initMrcRender(camera, models, ls);
 
     return 0;
 }

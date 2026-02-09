@@ -996,7 +996,9 @@ model_render_core_example/CMakeFiles/model_render_core_example.dir/main.cpp.o: \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/model_geometry.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/utils/point_projection.h \
   /Users/yura/stuff/clion/curved_space_render_engine/shader_core/include/utils/mat.h \
+  /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/light_source.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/utils/graphics_tools.h \
+  /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/scene_cache.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/utils/compute_normals.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/utils/../model/model.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/utils/vertices_transform.h \

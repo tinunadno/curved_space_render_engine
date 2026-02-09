@@ -130,6 +130,54 @@ black_hole_shader/fast:
 	cd /Users/yura/stuff/clion/curved_space_render_engine/build && $(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/build
 .PHONY : black_hole_shader/fast
 
+__/mrc_texture_example/main.o: __/mrc_texture_example/main.cpp.o
+.PHONY : __/mrc_texture_example/main.o
+
+# target to build an object file
+__/mrc_texture_example/main.cpp.o:
+	cd /Users/yura/stuff/clion/curved_space_render_engine/build && $(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o
+.PHONY : __/mrc_texture_example/main.cpp.o
+
+__/mrc_texture_example/main.i: __/mrc_texture_example/main.cpp.i
+.PHONY : __/mrc_texture_example/main.i
+
+# target to preprocess a source file
+__/mrc_texture_example/main.cpp.i:
+	cd /Users/yura/stuff/clion/curved_space_render_engine/build && $(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.i
+.PHONY : __/mrc_texture_example/main.cpp.i
+
+__/mrc_texture_example/main.s: __/mrc_texture_example/main.cpp.s
+.PHONY : __/mrc_texture_example/main.s
+
+# target to generate assembly for a file
+__/mrc_texture_example/main.cpp.s:
+	cd /Users/yura/stuff/clion/curved_space_render_engine/build && $(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.s
+.PHONY : __/mrc_texture_example/main.cpp.s
+
+__/triangle_lightning_example/main.o: __/triangle_lightning_example/main.cpp.o
+.PHONY : __/triangle_lightning_example/main.o
+
+# target to build an object file
+__/triangle_lightning_example/main.cpp.o:
+	cd /Users/yura/stuff/clion/curved_space_render_engine/build && $(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o
+.PHONY : __/triangle_lightning_example/main.cpp.o
+
+__/triangle_lightning_example/main.i: __/triangle_lightning_example/main.cpp.i
+.PHONY : __/triangle_lightning_example/main.i
+
+# target to preprocess a source file
+__/triangle_lightning_example/main.cpp.i:
+	cd /Users/yura/stuff/clion/curved_space_render_engine/build && $(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.i
+.PHONY : __/triangle_lightning_example/main.cpp.i
+
+__/triangle_lightning_example/main.s: __/triangle_lightning_example/main.cpp.s
+.PHONY : __/triangle_lightning_example/main.s
+
+# target to generate assembly for a file
+__/triangle_lightning_example/main.cpp.s:
+	cd /Users/yura/stuff/clion/curved_space_render_engine/build && $(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.s
+.PHONY : __/triangle_lightning_example/main.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -163,6 +211,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... black_hole_shader"
+	@echo "... __/mrc_texture_example/main.o"
+	@echo "... __/mrc_texture_example/main.i"
+	@echo "... __/mrc_texture_example/main.s"
+	@echo "... __/triangle_lightning_example/main.o"
+	@echo "... __/triangle_lightning_example/main.i"
+	@echo "... __/triangle_lightning_example/main.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

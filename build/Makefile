@@ -181,6 +181,32 @@ model_reconstruction/fast:
 	$(MAKE) $(MAKESILENT) -f model_reconstruction/CMakeFiles/model_reconstruction.dir/build.make model_reconstruction/CMakeFiles/model_reconstruction.dir/build
 .PHONY : model_reconstruction/fast
 
+#=============================================================================
+# Target rules for targets named texture_example
+
+# Build rule for target.
+texture_example: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 texture_example
+.PHONY : texture_example
+
+# fast build rule for target.
+texture_example/fast:
+	$(MAKE) $(MAKESILENT) -f mrc_texture_example/CMakeFiles/texture_example.dir/build.make mrc_texture_example/CMakeFiles/texture_example.dir/build
+.PHONY : texture_example/fast
+
+#=============================================================================
+# Target rules for targets named triangle_lightning_example
+
+# Build rule for target.
+triangle_lightning_example: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 triangle_lightning_example
+.PHONY : triangle_lightning_example
+
+# fast build rule for target.
+triangle_lightning_example/fast:
+	$(MAKE) $(MAKESILENT) -f triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/build.make triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/build
+.PHONY : triangle_lightning_example/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -194,6 +220,8 @@ help:
 	@echo "... model_render_core"
 	@echo "... model_render_core_example"
 	@echo "... shader_core_examples"
+	@echo "... texture_example"
+	@echo "... triangle_lightning_example"
 .PHONY : help
 
 

@@ -13,6 +13,7 @@ struct FragmentInput {
     sc::utils::Vec<NumericT, 2> uv;
     sc::utils::Vec<NumericT, 3> normal;
     sc::utils::Vec<NumericT, 3> worldPos;
+    sc::utils::Vec<NumericT, 3> cameraPos;
     NumericT depth;
     const std::vector<LightSource<NumericT>>& lights;
 };

@@ -70,6 +70,8 @@ all: black_hole_shader/all
 all: model_render_core/all
 all: model_render_core_example/all
 all: model_reconstruction/all
+all: mrc_texture_example/all
+all: triangle_lightning_example/all
 .PHONY : all
 
 # The main recursive "codegen" target.
@@ -80,6 +82,8 @@ codegen: black_hole_shader/codegen
 codegen: model_render_core/codegen
 codegen: model_render_core_example/codegen
 codegen: model_reconstruction/codegen
+codegen: mrc_texture_example/codegen
+codegen: triangle_lightning_example/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -90,6 +94,8 @@ preinstall: black_hole_shader/preinstall
 preinstall: model_render_core/preinstall
 preinstall: model_render_core_example/preinstall
 preinstall: model_reconstruction/preinstall
+preinstall: mrc_texture_example/preinstall
+preinstall: triangle_lightning_example/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
@@ -100,6 +106,8 @@ clean: black_hole_shader/clean
 clean: model_render_core/clean
 clean: model_render_core_example/clean
 clean: model_reconstruction/clean
+clean: mrc_texture_example/clean
+clean: triangle_lightning_example/clean
 .PHONY : clean
 
 #=============================================================================
@@ -179,6 +187,25 @@ model_render_core_example/clean: model_render_core_example/CMakeFiles/model_rend
 .PHONY : model_render_core_example/clean
 
 #=============================================================================
+# Directory level rules for directory mrc_texture_example
+
+# Recursive "all" directory target.
+mrc_texture_example/all: mrc_texture_example/CMakeFiles/texture_example.dir/all
+.PHONY : mrc_texture_example/all
+
+# Recursive "codegen" directory target.
+mrc_texture_example/codegen: mrc_texture_example/CMakeFiles/texture_example.dir/codegen
+.PHONY : mrc_texture_example/codegen
+
+# Recursive "preinstall" directory target.
+mrc_texture_example/preinstall:
+.PHONY : mrc_texture_example/preinstall
+
+# Recursive "clean" directory target.
+mrc_texture_example/clean: mrc_texture_example/CMakeFiles/texture_example.dir/clean
+.PHONY : mrc_texture_example/clean
+
+#=============================================================================
 # Directory level rules for directory ray_marching_core
 
 # Recursive "all" directory target.
@@ -236,13 +263,32 @@ shader_core_examples/clean: shader_core_examples/CMakeFiles/shader_core_examples
 .PHONY : shader_core_examples/clean
 
 #=============================================================================
+# Directory level rules for directory triangle_lightning_example
+
+# Recursive "all" directory target.
+triangle_lightning_example/all: triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/all
+.PHONY : triangle_lightning_example/all
+
+# Recursive "codegen" directory target.
+triangle_lightning_example/codegen: triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/codegen
+.PHONY : triangle_lightning_example/codegen
+
+# Recursive "preinstall" directory target.
+triangle_lightning_example/preinstall:
+.PHONY : triangle_lightning_example/preinstall
+
+# Recursive "clean" directory target.
+triangle_lightning_example/clean: triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/clean
+.PHONY : triangle_lightning_example/clean
+
+#=============================================================================
 # Target rules for target shader_core_examples/CMakeFiles/shader_core_examples.dir
 
 # All Build rule for target.
 shader_core_examples/CMakeFiles/shader_core_examples.dir/all:
 	$(MAKE) $(MAKESILENT) -f shader_core_examples/CMakeFiles/shader_core_examples.dir/build.make shader_core_examples/CMakeFiles/shader_core_examples.dir/depend
 	$(MAKE) $(MAKESILENT) -f shader_core_examples/CMakeFiles/shader_core_examples.dir/build.make shader_core_examples/CMakeFiles/shader_core_examples.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=8,9 "Built target shader_core_examples"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=10,11 "Built target shader_core_examples"
 .PHONY : shader_core_examples/CMakeFiles/shader_core_examples.dir/all
 
 # Build rule for subdir invocation for target.
@@ -259,7 +305,7 @@ shader_core_examples: shader_core_examples/CMakeFiles/shader_core_examples.dir/r
 # codegen rule for target.
 shader_core_examples/CMakeFiles/shader_core_examples.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f shader_core_examples/CMakeFiles/shader_core_examples.dir/build.make shader_core_examples/CMakeFiles/shader_core_examples.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=8,9 "Finished codegen for target shader_core_examples"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=10,11 "Finished codegen for target shader_core_examples"
 .PHONY : shader_core_examples/CMakeFiles/shader_core_examples.dir/codegen
 
 # clean rule for target.
@@ -274,12 +320,12 @@ shader_core_examples/CMakeFiles/shader_core_examples.dir/clean:
 black_hole_shader/CMakeFiles/black_hole_shader.dir/all:
 	$(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/depend
 	$(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=1,2 "Built target black_hole_shader"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=1,2,3,4 "Built target black_hole_shader"
 .PHONY : black_hole_shader/CMakeFiles/black_hole_shader.dir/all
 
 # Build rule for subdir invocation for target.
 black_hole_shader/CMakeFiles/black_hole_shader.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 black_hole_shader/CMakeFiles/black_hole_shader.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles 0
 .PHONY : black_hole_shader/CMakeFiles/black_hole_shader.dir/rule
@@ -291,7 +337,7 @@ black_hole_shader: black_hole_shader/CMakeFiles/black_hole_shader.dir/rule
 # codegen rule for target.
 black_hole_shader/CMakeFiles/black_hole_shader.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make black_hole_shader/CMakeFiles/black_hole_shader.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=1,2 "Finished codegen for target black_hole_shader"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target black_hole_shader"
 .PHONY : black_hole_shader/CMakeFiles/black_hole_shader.dir/codegen
 
 # clean rule for target.
@@ -338,7 +384,7 @@ model_render_core/CMakeFiles/model_render_core.dir/clean:
 model_render_core_example/CMakeFiles/model_render_core_example.dir/all: model_render_core/CMakeFiles/model_render_core.dir/all
 	$(MAKE) $(MAKESILENT) -f model_render_core_example/CMakeFiles/model_render_core_example.dir/build.make model_render_core_example/CMakeFiles/model_render_core_example.dir/depend
 	$(MAKE) $(MAKESILENT) -f model_render_core_example/CMakeFiles/model_render_core_example.dir/build.make model_render_core_example/CMakeFiles/model_render_core_example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=6,7 "Built target model_render_core_example"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=8,9 "Built target model_render_core_example"
 .PHONY : model_render_core_example/CMakeFiles/model_render_core_example.dir/all
 
 # Build rule for subdir invocation for target.
@@ -355,7 +401,7 @@ model_render_core_example: model_render_core_example/CMakeFiles/model_render_cor
 # codegen rule for target.
 model_render_core_example/CMakeFiles/model_render_core_example.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f model_render_core_example/CMakeFiles/model_render_core_example.dir/build.make model_render_core_example/CMakeFiles/model_render_core_example.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=6,7 "Finished codegen for target model_render_core_example"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=8,9 "Finished codegen for target model_render_core_example"
 .PHONY : model_render_core_example/CMakeFiles/model_render_core_example.dir/codegen
 
 # clean rule for target.
@@ -370,7 +416,7 @@ model_render_core_example/CMakeFiles/model_render_core_example.dir/clean:
 model_reconstruction/CMakeFiles/model_reconstruction.dir/all: model_render_core/CMakeFiles/model_render_core.dir/all
 	$(MAKE) $(MAKESILENT) -f model_reconstruction/CMakeFiles/model_reconstruction.dir/build.make model_reconstruction/CMakeFiles/model_reconstruction.dir/depend
 	$(MAKE) $(MAKESILENT) -f model_reconstruction/CMakeFiles/model_reconstruction.dir/build.make model_reconstruction/CMakeFiles/model_reconstruction.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=3,4,5 "Built target model_reconstruction"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=5,6,7 "Built target model_reconstruction"
 .PHONY : model_reconstruction/CMakeFiles/model_reconstruction.dir/all
 
 # Build rule for subdir invocation for target.
@@ -387,13 +433,77 @@ model_reconstruction: model_reconstruction/CMakeFiles/model_reconstruction.dir/r
 # codegen rule for target.
 model_reconstruction/CMakeFiles/model_reconstruction.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f model_reconstruction/CMakeFiles/model_reconstruction.dir/build.make model_reconstruction/CMakeFiles/model_reconstruction.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=3,4,5 "Finished codegen for target model_reconstruction"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=5,6,7 "Finished codegen for target model_reconstruction"
 .PHONY : model_reconstruction/CMakeFiles/model_reconstruction.dir/codegen
 
 # clean rule for target.
 model_reconstruction/CMakeFiles/model_reconstruction.dir/clean:
 	$(MAKE) $(MAKESILENT) -f model_reconstruction/CMakeFiles/model_reconstruction.dir/build.make model_reconstruction/CMakeFiles/model_reconstruction.dir/clean
 .PHONY : model_reconstruction/CMakeFiles/model_reconstruction.dir/clean
+
+#=============================================================================
+# Target rules for target mrc_texture_example/CMakeFiles/texture_example.dir
+
+# All Build rule for target.
+mrc_texture_example/CMakeFiles/texture_example.dir/all: model_render_core/CMakeFiles/model_render_core.dir/all
+	$(MAKE) $(MAKESILENT) -f mrc_texture_example/CMakeFiles/texture_example.dir/build.make mrc_texture_example/CMakeFiles/texture_example.dir/depend
+	$(MAKE) $(MAKESILENT) -f mrc_texture_example/CMakeFiles/texture_example.dir/build.make mrc_texture_example/CMakeFiles/texture_example.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=12,13 "Built target texture_example"
+.PHONY : mrc_texture_example/CMakeFiles/texture_example.dir/all
+
+# Build rule for subdir invocation for target.
+mrc_texture_example/CMakeFiles/texture_example.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mrc_texture_example/CMakeFiles/texture_example.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles 0
+.PHONY : mrc_texture_example/CMakeFiles/texture_example.dir/rule
+
+# Convenience name for target.
+texture_example: mrc_texture_example/CMakeFiles/texture_example.dir/rule
+.PHONY : texture_example
+
+# codegen rule for target.
+mrc_texture_example/CMakeFiles/texture_example.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f mrc_texture_example/CMakeFiles/texture_example.dir/build.make mrc_texture_example/CMakeFiles/texture_example.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=12,13 "Finished codegen for target texture_example"
+.PHONY : mrc_texture_example/CMakeFiles/texture_example.dir/codegen
+
+# clean rule for target.
+mrc_texture_example/CMakeFiles/texture_example.dir/clean:
+	$(MAKE) $(MAKESILENT) -f mrc_texture_example/CMakeFiles/texture_example.dir/build.make mrc_texture_example/CMakeFiles/texture_example.dir/clean
+.PHONY : mrc_texture_example/CMakeFiles/texture_example.dir/clean
+
+#=============================================================================
+# Target rules for target triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir
+
+# All Build rule for target.
+triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/all: model_render_core/CMakeFiles/model_render_core.dir/all
+	$(MAKE) $(MAKESILENT) -f triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/build.make triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/depend
+	$(MAKE) $(MAKESILENT) -f triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/build.make triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=14,15 "Built target triangle_lightning_example"
+.PHONY : triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/all
+
+# Build rule for subdir invocation for target.
+triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles 0
+.PHONY : triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/rule
+
+# Convenience name for target.
+triangle_lightning_example: triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/rule
+.PHONY : triangle_lightning_example
+
+# codegen rule for target.
+triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/build.make triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=14,15 "Finished codegen for target triangle_lightning_example"
+.PHONY : triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/codegen
+
+# clean rule for target.
+triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/clean:
+	$(MAKE) $(MAKESILENT) -f triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/build.make triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/clean
+.PHONY : triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

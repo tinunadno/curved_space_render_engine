@@ -7,7 +7,6 @@ find_package(OpenGL REQUIRED)
 
 add_executable(black_hole_shader
         main.cpp
-        ../mrc_texture_example/main.cpp
 )
 
 target_link_libraries(black_hole_shader

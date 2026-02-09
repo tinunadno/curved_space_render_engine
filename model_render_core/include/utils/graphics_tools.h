@@ -247,6 +247,7 @@ void rasterizeTriangle(
                         interpAttr.uv,
                         interpAttr.normal,
                         interpAttr.worldPos,
+                        cache.camera.pos(),
                         currentZ,
                         cache.lights
                     };

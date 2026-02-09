@@ -998,6 +998,7 @@ model_reconstruction/CMakeFiles/model_reconstruction.dir/main.cpp.o: /Users/yura
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/model.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_reconstruction/model_intersection.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_reconstruction/snapshot.h \
+  /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/light_source.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/main_pipeline.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/io.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/material.h \
@@ -1005,6 +1006,7 @@ model_reconstruction/CMakeFiles/model_reconstruction.dir/main.cpp.o: /Users/yura
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/model_geometry.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/texture.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/thirdparty/stb_image.h \
+  /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/scene_cache.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/model/model.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/utils/compute_normals.h \
   /Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/utils/graphics_tools.h \
@@ -2863,6 +2865,8 @@ model_reconstruction/CMakeFiles/model_reconstruction.dir/model_intersection.cpp.
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/hash.h:
 
+/Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/scene_cache.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__iterator/back_insert_iterator.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_timeval.h:
@@ -2926,6 +2930,8 @@ model_reconstruction/CMakeFiles/model_reconstruction.dir/model_intersection.cpp.
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__atomic/kill_dependency.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__format/format_functions.h:
+
+/Users/yura/stuff/clion/curved_space_render_engine/model_render_core/include/light_source.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/is_sorted_until.h:
 

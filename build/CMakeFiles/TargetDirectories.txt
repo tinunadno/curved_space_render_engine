@@ -19,3 +19,9 @@
 /Users/yura/stuff/clion/curved_space_render_engine/build/model_reconstruction/CMakeFiles/model_reconstruction.dir
 /Users/yura/stuff/clion/curved_space_render_engine/build/model_reconstruction/CMakeFiles/edit_cache.dir
 /Users/yura/stuff/clion/curved_space_render_engine/build/model_reconstruction/CMakeFiles/rebuild_cache.dir
+/Users/yura/stuff/clion/curved_space_render_engine/build/mrc_texture_example/CMakeFiles/texture_example.dir
+/Users/yura/stuff/clion/curved_space_render_engine/build/mrc_texture_example/CMakeFiles/edit_cache.dir
+/Users/yura/stuff/clion/curved_space_render_engine/build/mrc_texture_example/CMakeFiles/rebuild_cache.dir
+/Users/yura/stuff/clion/curved_space_render_engine/build/triangle_lightning_example/CMakeFiles/triangle_lightning_example.dir
+/Users/yura/stuff/clion/curved_space_render_engine/build/triangle_lightning_example/CMakeFiles/edit_cache.dir
+/Users/yura/stuff/clion/curved_space_render_engine/build/triangle_lightning_example/CMakeFiles/rebuild_cache.dir

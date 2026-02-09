@@ -38,86 +38,77 @@ struct DefaultShaderFactory
                 albedo = mat.diffuseMap->sample(frag.uv);
 
             /* ===============================
-               2. Нормаль
+               2. Нормаль (world-space)
                =============================== */
-            Vec3f N;
+            Vec3f N = sc::utils::norm(Vec3f{
+                static_cast<float>(frag.normal[0]),
+                static_cast<float>(frag.normal[1]),
+                static_cast<float>(frag.normal[2])
+            });
 
-            if (mat.normalMap)
-            {
-                // normal map в [0,1] -> [-1,1]
-                Vec3f nm = mat.normalMap->sample(frag.uv);
-                N = sc::utils::norm(Vec3f{
-                    nm[0] * 2.f - 1.f,
-                    nm[1] * 2.f - 1.f,
-                    nm[2] * 2.f - 1.f
-                });
-            }
-            else
-            {
-                N = sc::utils::norm(Vec3f{
-                    static_cast<float>(frag.normal[0]),
-                    static_cast<float>(frag.normal[1]),
-                    static_cast<float>(frag.normal[2])
-                });
-            }
+            // Normal map: нужна TBN-матрица для корректного преобразования
+            // из tangent space в world space.  Без TBN нельзя использовать
+            // normal map корректно, поэтому пока используем только
+            // геометрическую нормаль.
 
             /* ===============================
-               3. Вектор на камеру
+               3. Вектор на камеру (view)
                =============================== */
             Vec3f V = sc::utils::norm(Vec3f{
-                -static_cast<float>(frag.worldPos[0]),
-                -static_cast<float>(frag.worldPos[1]),
-                -static_cast<float>(frag.worldPos[2])
+                static_cast<float>(frag.cameraPos[0] - frag.worldPos[0]),
+                static_cast<float>(frag.cameraPos[1] - frag.worldPos[1]),
+                static_cast<float>(frag.cameraPos[2] - frag.worldPos[2])
             });
 
             /* ===============================
                4. Ambient
                =============================== */
-            Vec3f result = albedo * static_cast<float>(mat.ambient);
+            float amb = static_cast<float>(mat.ambient);
+            Vec3f result = albedo * amb;
 
             /* ===============================
                5. Освещение от всех источников
                =============================== */
+            float shin = static_cast<float>(mat.shininess);
+            float ks   = static_cast<float>(mat.specular);
+
             for (const auto& light : frag.lights)
             {
+                /* Направление на источник */
                 Vec3f L = sc::utils::norm(Vec3f{
                     static_cast<float>(light.position[0] - frag.worldPos[0]),
                     static_cast<float>(light.position[1] - frag.worldPos[1]),
                     static_cast<float>(light.position[2] - frag.worldPos[2])
                 });
 
+                float intensity = static_cast<float>(light.intensity);
                 float NdotL = std::max(0.f, sc::utils::dot(N, L));
 
                 /* ===== Диффузная (Lambert) ===== */
-                Vec3f diffuse =
-                    albedo *
-                    NdotL *
-                    light.intensity *
-                    light.color;
+                Vec3f diffuse = albedo * light.color * (NdotL * intensity);
 
                 /* ===== Specular (Phong) ===== */
-                Vec3f R = sc::utils::norm(2.f * NdotL * N - L);
-
-                float spec = 0.f;
-                if (mat.specular > 0.f && NdotL > 0.f)
+                Vec3f specVec{0.f, 0.f, 0.f};
+                if (ks > 0.f && NdotL > 0.f)
                 {
-                    constexpr float shininess = 32.f;
-                    spec = std::pow(
-                        std::max(0.f, sc::utils::dot(R, V)),
-                        shininess
-                    );
+                    // R = 2(N·L)N - L   (reflection of L about N)
+                    Vec3f R = N * (2.f * NdotL) - L;
+                    float RdotV = std::max(0.f, sc::utils::dot(R, V));
+                    float spec = std::pow(RdotV, shin);
+                    specVec = light.color * (spec * ks * intensity);
                 }
 
-                Vec3f specular =
-                    light.color *
-                    spec *
-                    static_cast<float>(mat.specular) *
-                    light.intensity;
-
-                result += diffuse + specular;
+                result += diffuse + specVec;
             }
 
-            return result;
+            /* ===============================
+               6. Clamp [0, 1]
+               =============================== */
+            return Vec3f{
+                std::min(result[0], 1.f),
+                std::min(result[1], 1.f),
+                std::min(result[2], 1.f)
+            };
         };
 
     }
@@ -199,7 +190,7 @@ template<typename NumericT,
     typename MakeShader = internal::DefaultShaderFactory<NumericT>>
 void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
                    const std::vector<Model<NumericT>>& models,
-                   const std::vector<LightSource<NumericT>>& lights = {LightSource<NumericT>{}},
+                   const std::vector<LightSource<NumericT>>& lights = {},
                    EachFrameModelUpdate efmu = { },
                    CustomDrawer cd = { },
                    const std::vector<std::pair<int, std::function<void()>>>& customKeyHandlers = {},
@@ -264,7 +255,7 @@ void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
 }
 
 
-
+ // TODO move lights to the beginning in all examples
 template<typename NumericT,
     typename EachFrameModelUpdate = decltype([](std::size_t, std::size_t){ }),
     typename CustomDrawer =
@@ -273,13 +264,13 @@ template<typename NumericT,
     typename MakeShader = internal::DefaultShaderFactory<NumericT>>
 auto makeMrcWindow(sc::Camera<NumericT, sc::VecArray>& camera,
                    const std::vector<Model<NumericT>>& models,
-                   const std::vector<LightSource<NumericT>>& lights = {LightSource<NumericT>{}},
                    EachFrameModelUpdate efmu = { },
                    CustomDrawer cd = { },
                    const std::vector<std::pair<int, std::function<void()>>>& customKeyHandlers = {},
                    sc::utils::Vec<int, 2> windowResolution = sc::utils::Vec<int, 2>{-1, -1},
                    unsigned int targetFrameRateMs = 60,
                    const char* title = "Model Renderer",
+                   const std::vector<LightSource<NumericT>>& lights = {LightSource<NumericT>{}},
                    MakeShader makeShader = { })
 {
     using Mat4 = sc::utils::Mat<NumericT, 4, 4>;
@@ -300,12 +291,19 @@ auto makeMrcWindow(sc::Camera<NumericT, sc::VecArray>& camera,
         for (auto& buf : *zBuffer)
             std::fill(buf.begin(), buf.end(), std::numeric_limits<NumericT>::max());
 
+        internal::SceneCache<NumericT> sceneCache{
+            renderer,
+            camera,
+            *zBuffer,
+            lights,
+        };
+
         Mat4 view = getViewMatrix(camera);
         Mat4 proj = getProjectionMatrix(camera);
         auto viewProj = proj * view;
 
         efmu(frame, time);
-        internal::renderSingleFrame(models, lights, camera, *zBuffer, renderer, viewProj, makeShader);
+        internal::renderSingleFrame(models, viewProj, makeShader, sceneCache);
         cd(frame, time, renderer, viewProj, *zBuffer);
     };
 

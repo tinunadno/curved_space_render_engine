@@ -291,6 +291,24 @@ shader_core_examples_IS_TOP_LEVEL:STATIC=OFF
 //Value Computed by CMake
 shader_core_examples_SOURCE_DIR:STATIC=/Users/yura/stuff/clion/curved_space_render_engine/shader_core_examples
 
+//Value Computed by CMake
+texture_example_BINARY_DIR:STATIC=/Users/yura/stuff/clion/curved_space_render_engine/build/mrc_texture_example
+
+//Value Computed by CMake
+texture_example_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+texture_example_SOURCE_DIR:STATIC=/Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example
+
+//Value Computed by CMake
+triangle_lightning_example_BINARY_DIR:STATIC=/Users/yura/stuff/clion/curved_space_render_engine/build/triangle_lightning_example
+
+//Value Computed by CMake
+triangle_lightning_example_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+triangle_lightning_example_SOURCE_DIR:STATIC=/Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example
+
 
 ########################
 # INTERNAL cache entries
@@ -382,7 +400,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=10
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

@@ -198,6 +198,7 @@ Material<NumericT> buildMaterial(const MtlEntry<NumericT>& entry)
     mat.baseColor = entry.kd;
     mat.ambient   = (entry.ka[0] + entry.ka[1] + entry.ka[2]) / NumericT(3);
     mat.specular  = (entry.ks[0] + entry.ks[1] + entry.ks[2]) / NumericT(3);
+    mat.shininess = (entry.ns > 0) ? entry.ns : NumericT(32);
     mat.diffuseMap = loadTexture<NumericT>(entry.mapKd);
     return mat;
 }
