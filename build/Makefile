@@ -143,19 +143,6 @@ black_hole_shader/fast:
 .PHONY : black_hole_shader/fast
 
 #=============================================================================
-# Target rules for targets named model_render_core
-
-# Build rule for target.
-model_render_core: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 model_render_core
-.PHONY : model_render_core
-
-# fast build rule for target.
-model_render_core/fast:
-	$(MAKE) $(MAKESILENT) -f model_render_core/CMakeFiles/model_render_core.dir/build.make model_render_core/CMakeFiles/model_render_core.dir/build
-.PHONY : model_render_core/fast
-
-#=============================================================================
 # Target rules for targets named model_render_core_example
 
 # Build rule for target.
@@ -217,7 +204,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... black_hole_shader"
 	@echo "... model_reconstruction"
-	@echo "... model_render_core"
 	@echo "... model_render_core_example"
 	@echo "... shader_core_examples"
 	@echo "... texture_example"

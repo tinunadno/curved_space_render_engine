@@ -8,8 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example/main.cpp" "black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o" "gcc" "black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o.d"
-  "/Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example/main.cpp" "black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o" "gcc" "black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o.d"
   "/Users/yura/stuff/clion/curved_space_render_engine/black_hole_shader/main.cpp" "black_hole_shader/CMakeFiles/black_hole_shader.dir/main.cpp.o" "gcc" "black_hole_shader/CMakeFiles/black_hole_shader.dir/main.cpp.o.d"
   )
 

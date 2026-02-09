@@ -100,6 +100,8 @@ struct MtlEntry {
     sc::utils::Vec<NumericT, 3> ks{0, 0, 0};
     NumericT ns = 0;
     std::string mapKd;
+    std::string mapNs;
+    std::string mapBump;
 };
 
 template<typename NumericT>
@@ -159,6 +161,24 @@ parseMtlFile(const char* path, const std::string& baseDir)
             std::string texPath = readRestOfLine(p, end);
             materials[currentName].mapKd = resolvePath(baseDir, texPath);
         }
+        else if (std::strncmp(p, "map_Ns", 6) == 0 && (p[6] == ' ' || p[6] == '\t'))
+        {
+            p += 6;
+            std::string texPath = readRestOfLine(p, end);
+            materials[currentName].mapNs = resolvePath(baseDir, texPath);
+        }
+        else if (std::strncmp(p, "map_Bump", 8) == 0 && (p[8] == ' ' || p[8] == '\t'))
+        {
+            p += 8;
+            std::string texPath = readRestOfLine(p, end);
+            materials[currentName].mapBump = resolvePath(baseDir, texPath);
+        }
+        else if (std::strncmp(p, "bump", 4) == 0 && (p[4] == ' ' || p[4] == '\t'))
+        {
+            p += 4;
+            std::string texPath = readRestOfLine(p, end);
+            materials[currentName].mapBump = resolvePath(baseDir, texPath);
+        }
         else
         {
             skipLine(p, end);
@@ -200,6 +220,8 @@ Material<NumericT> buildMaterial(const MtlEntry<NumericT>& entry)
     mat.specular  = (entry.ks[0] + entry.ks[1] + entry.ks[2]) / NumericT(3);
     mat.shininess = (entry.ns > 0) ? entry.ns : NumericT(32);
     mat.diffuseMap = loadTexture<NumericT>(entry.mapKd);
+    mat.roughnessMap = loadTexture<NumericT>(entry.mapNs);
+    mat.normalMap = loadTexture<NumericT>(entry.mapBump);
     return mat;
 }
 

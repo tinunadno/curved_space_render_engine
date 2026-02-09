@@ -86,51 +86,19 @@ black_hole_shader/CMakeFiles/black_hole_shader.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/black_hole_shader.dir/main.cpp.s"
 	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yura/stuff/clion/curved_space_render_engine/black_hole_shader/main.cpp -o CMakeFiles/black_hole_shader.dir/main.cpp.s
 
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o: black_hole_shader/CMakeFiles/black_hole_shader.dir/flags.make
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o: /Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example/main.cpp
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o: black_hole_shader/CMakeFiles/black_hole_shader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o"
-	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o -MF CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o.d -o CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o -c /Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example/main.cpp
-
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.i"
-	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example/main.cpp > CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.i
-
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.s"
-	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example/main.cpp -o CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.s
-
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o: black_hole_shader/CMakeFiles/black_hole_shader.dir/flags.make
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o: /Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example/main.cpp
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o: black_hole_shader/CMakeFiles/black_hole_shader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o"
-	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o -MF CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o.d -o CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o -c /Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example/main.cpp
-
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.i"
-	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example/main.cpp > CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.i
-
-black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.s"
-	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example/main.cpp -o CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.s
-
 # Object files for target black_hole_shader
 black_hole_shader_OBJECTS = \
-"CMakeFiles/black_hole_shader.dir/main.cpp.o" \
-"CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o" \
-"CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o"
+"CMakeFiles/black_hole_shader.dir/main.cpp.o"
 
 # External object files for target black_hole_shader
 black_hole_shader_EXTERNAL_OBJECTS =
 
 black_hole_shader/black_hole_shader: black_hole_shader/CMakeFiles/black_hole_shader.dir/main.cpp.o
-black_hole_shader/black_hole_shader: black_hole_shader/CMakeFiles/black_hole_shader.dir/__/mrc_texture_example/main.cpp.o
-black_hole_shader/black_hole_shader: black_hole_shader/CMakeFiles/black_hole_shader.dir/__/triangle_lightning_example/main.cpp.o
 black_hole_shader/black_hole_shader: black_hole_shader/CMakeFiles/black_hole_shader.dir/build.make
 black_hole_shader/black_hole_shader: /opt/homebrew/lib/libglfw.3.4.dylib
 black_hole_shader/black_hole_shader: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework
 black_hole_shader/black_hole_shader: black_hole_shader/CMakeFiles/black_hole_shader.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable black_hole_shader"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/yura/stuff/clion/curved_space_render_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable black_hole_shader"
 	cd /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/black_hole_shader.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

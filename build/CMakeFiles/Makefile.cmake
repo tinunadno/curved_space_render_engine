@@ -85,7 +85,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "shader_core_examples/CMakeFiles/shader_core_examples.dir/DependInfo.cmake"
   "black_hole_shader/CMakeFiles/black_hole_shader.dir/DependInfo.cmake"
-  "model_render_core/CMakeFiles/model_render_core.dir/DependInfo.cmake"
   "model_render_core_example/CMakeFiles/model_render_core_example.dir/DependInfo.cmake"
   "model_reconstruction/CMakeFiles/model_reconstruction.dir/DependInfo.cmake"
   "mrc_texture_example/CMakeFiles/texture_example.dir/DependInfo.cmake"

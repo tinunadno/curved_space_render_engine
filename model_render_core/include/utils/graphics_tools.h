@@ -248,6 +248,8 @@ void rasterizeTriangle(
                         interpAttr.normal,
                         interpAttr.worldPos,
                         cache.camera.pos(),
+                        interpAttr.tangent,
+                        interpAttr.bitangent,
                         currentZ,
                         cache.lights
                     };

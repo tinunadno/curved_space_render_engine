@@ -5,7 +5,7 @@ int main() {
     sc::Camera<float, sc::VecArray> camera;
     camera.pos()[2] = 2.0f;
     camera.setLen(0.3);
-    const char* objFile = "/Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example/Untitled.obj";
+    const char* objFile = "/Users/yura/stuff/clion/curved_space_render_engine/triangle_lightning_example/tri.obj";
 
     std::vector<mrc::Model<float>> models;
     std::vector<mrc::LightSource<float>> ls;

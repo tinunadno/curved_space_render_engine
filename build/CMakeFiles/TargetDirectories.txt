@@ -10,7 +10,6 @@
 /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader/CMakeFiles/black_hole_shader.dir
 /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader/CMakeFiles/edit_cache.dir
 /Users/yura/stuff/clion/curved_space_render_engine/build/black_hole_shader/CMakeFiles/rebuild_cache.dir
-/Users/yura/stuff/clion/curved_space_render_engine/build/model_render_core/CMakeFiles/model_render_core.dir
 /Users/yura/stuff/clion/curved_space_render_engine/build/model_render_core/CMakeFiles/edit_cache.dir
 /Users/yura/stuff/clion/curved_space_render_engine/build/model_render_core/CMakeFiles/rebuild_cache.dir
 /Users/yura/stuff/clion/curved_space_render_engine/build/model_render_core_example/CMakeFiles/model_render_core_example.dir

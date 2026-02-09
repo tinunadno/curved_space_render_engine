@@ -14,6 +14,7 @@ struct Material {
     sc::utils::Vec<NumericT, 3> baseColor{1, 1, 1};
     std::shared_ptr<Texture<NumericT>> diffuseMap  = nullptr;
     std::shared_ptr<Texture<NumericT>> normalMap   = nullptr;
+    std::shared_ptr<Texture<NumericT>> roughnessMap   = nullptr;
     NumericT ambient   = 0.1;
     NumericT specular  = 0.0;
     NumericT shininess = 32.0;

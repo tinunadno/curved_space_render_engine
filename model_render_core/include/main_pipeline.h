@@ -40,16 +40,36 @@ struct DefaultShaderFactory
             /* ===============================
                2. Нормаль (world-space)
                =============================== */
-            Vec3f N = sc::utils::norm(Vec3f{
+            Vec3f geoN = sc::utils::norm(Vec3f{
                 static_cast<float>(frag.normal[0]),
                 static_cast<float>(frag.normal[1]),
                 static_cast<float>(frag.normal[2])
             });
 
-            // Normal map: нужна TBN-матрица для корректного преобразования
-            // из tangent space в world space.  Без TBN нельзя использовать
-            // normal map корректно, поэтому пока используем только
-            // геометрическую нормаль.
+            Vec3f N = geoN;
+
+            if (mat.normalMap)
+            {
+                // Normal map хранит нормали в tangent space [0,1] → remap [-1,1]
+                Vec3f tsN = mat.normalMap->sample(frag.uv);
+                tsN = tsN * 2.f - Vec3f{1.f, 1.f, 1.f};
+
+                // Построение TBN базиса
+                Vec3f T = sc::utils::norm(Vec3f{
+                    static_cast<float>(frag.tangent[0]),
+                    static_cast<float>(frag.tangent[1]),
+                    static_cast<float>(frag.tangent[2])
+                });
+
+                // Gram-Schmidt: ортогонализируем T относительно N
+                T = sc::utils::norm(T - geoN * sc::utils::dot(T, geoN));
+                Vec3f B = sc::utils::cross(geoN, T);
+
+                // tangent space → world space
+                N = sc::utils::norm(
+                    T * tsN[0] + B * tsN[1] + geoN * tsN[2]
+                );
+            }
 
             /* ===============================
                3. Вектор на камеру (view)
@@ -67,11 +87,40 @@ struct DefaultShaderFactory
             Vec3f result = albedo * amb;
 
             /* ===============================
-               5. Освещение от всех источников
+               5. Roughness → Phong параметры
                =============================== */
-            float shin = static_cast<float>(mat.shininess);
-            float ks   = static_cast<float>(mat.specular);
+            float shin;
+            float ks;
 
+            if (mat.roughnessMap)
+            {
+                // map_Ns (Blender) хранит roughness:
+                //   0 (чёрный) = гладкий,  1 (белый) = шершавый
+                float roughness = std::clamp(
+                    mat.roughnessMap->sample(frag.uv)[0], 0.f, 1.f);
+                float smoothness = 1.f - roughness;
+                float s2 = smoothness * smoothness;
+                float s4 = s2 * s2;
+
+                // Roughness → Phong shininess:
+                //   smooth (r=0) → shin=512, rough (r=1) → shin=2
+                shin = s4 * 510.f + 2.f;
+
+                // Roughness → specular intensity:
+                //   smooth → full specular, rough → none
+                float specBase = static_cast<float>(mat.specular);
+                if (specBase <= 0.f) specBase = 0.5f;
+                ks = s2 * specBase;
+            }
+            else
+            {
+                shin = static_cast<float>(mat.shininess);
+                ks   = static_cast<float>(mat.specular);
+            }
+
+            /* ===============================
+               6. Освещение от всех источников
+               =============================== */
             for (const auto& light : frag.lights)
             {
                 /* Направление на источник */
@@ -87,14 +136,15 @@ struct DefaultShaderFactory
                 /* ===== Диффузная (Lambert) ===== */
                 Vec3f diffuse = albedo * light.color * (NdotL * intensity);
 
-                /* ===== Specular (Phong) ===== */
+                /* ===== Specular (Blinn-Phong) ===== */
                 Vec3f specVec{0.f, 0.f, 0.f};
                 if (ks > 0.f && NdotL > 0.f)
                 {
-                    // R = 2(N·L)N - L   (reflection of L about N)
-                    Vec3f R = N * (2.f * NdotL) - L;
-                    float RdotV = std::max(0.f, sc::utils::dot(R, V));
-                    float spec = std::pow(RdotV, shin);
+                    // Blinn-Phong: H = norm(L + V), spec = pow(dot(N,H), shin)
+                    // Визуально ближе к GGX чем классический Phong
+                    Vec3f H = sc::utils::norm(L + V);
+                    float NdotH = std::max(0.f, sc::utils::dot(N, H));
+                    float spec = std::pow(NdotH, shin);
                     specVec = light.color * (spec * ks * intensity);
                 }
 
@@ -102,7 +152,7 @@ struct DefaultShaderFactory
             }
 
             /* ===============================
-               6. Clamp [0, 1]
+               7. Clamp [0, 1]
                =============================== */
             return Vec3f{
                 std::min(result[0], 1.f),
@@ -133,8 +183,39 @@ void renderSingleFrame(const std::vector<Model<NumericT>>& models,
         {
             const auto& face = model.faces()[f];
 
-            
             auto faceNormal = getFaceNormal(transformedVerts, face);
+
+            // Compute per-face tangent/bitangent from positions + UVs
+            using Vec3 = sc::utils::Vec<NumericT, 3>;
+            using Vec2 = sc::utils::Vec<NumericT, 2>;
+
+            auto p0 = transformedVerts[face[0][0]];
+            auto p1 = transformedVerts[face[1][0]];
+            auto p2 = transformedVerts[face[2][0]];
+
+            Vec2 uv0{}, uv1{}, uv2{};
+            if (face[0][1] < model.uv().size()) uv0 = model.uv()[face[0][1]];
+            if (face[1][1] < model.uv().size()) uv1 = model.uv()[face[1][1]];
+            if (face[2][1] < model.uv().size()) uv2 = model.uv()[face[2][1]];
+
+            auto edge1 = p1 - p0;
+            auto edge2 = p2 - p0;
+            auto duv1 = uv1 - uv0;
+            auto duv2 = uv2 - uv0;
+
+            NumericT det = duv1[0] * duv2[1] - duv2[0] * duv1[1];
+
+            Vec3 faceTangent{1, 0, 0};
+            Vec3 faceBitangent{0, 1, 0};
+
+            if (std::abs(det) > NumericT(1e-8))
+            {
+                NumericT invDet = NumericT(1) / det;
+                faceTangent   = sc::utils::norm(
+                    (edge1 * duv2[1] - edge2 * duv1[1]) * invDet);
+                faceBitangent = sc::utils::norm(
+                    (edge2 * duv1[0] - edge1 * duv2[0]) * invDet);
+            }
 
             std::array<internal::ClipVertex<NumericT>, 3> clipVerts;
             for (int i = 0; i < 3; ++i)
@@ -142,13 +223,13 @@ void renderSingleFrame(const std::vector<Model<NumericT>>& models,
                 auto wsPos = transformedVerts[face[i][0]];
 
                 internal::VertexAttributes<NumericT> attr;
-                attr.worldPos = wsPos;
+                attr.worldPos  = wsPos;
+                attr.tangent   = faceTangent;
+                attr.bitangent = faceBitangent;
 
-                
                 if (face[i][1] < model.uv().size())
                     attr.uv = model.uv()[face[i][1]];
 
-                
                 if (face[i][2] < transformedNormals.size())
                     attr.normal = transformedNormals[face[i][2]];
                 else

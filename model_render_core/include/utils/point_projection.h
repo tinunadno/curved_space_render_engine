@@ -14,6 +14,8 @@ struct FragmentInput {
     sc::utils::Vec<NumericT, 3> normal;
     sc::utils::Vec<NumericT, 3> worldPos;
     sc::utils::Vec<NumericT, 3> cameraPos;
+    sc::utils::Vec<NumericT, 3> tangent;
+    sc::utils::Vec<NumericT, 3> bitangent;
     NumericT depth;
     const std::vector<LightSource<NumericT>>& lights;
 };
@@ -29,21 +31,28 @@ struct VertexAttributes {
     sc::utils::Vec<NumericT, 2> uv{};
     sc::utils::Vec<NumericT, 3> normal{};
     sc::utils::Vec<NumericT, 3> worldPos{};
+    sc::utils::Vec<NumericT, 3> tangent{};
+    sc::utils::Vec<NumericT, 3> bitangent{};
 
     VertexAttributes lerp(const VertexAttributes& o, NumericT t) const {
         return VertexAttributes{
-            uv      + (o.uv      - uv)      * t,
-            normal  + (o.normal  - normal)   * t,
-            worldPos+ (o.worldPos- worldPos) * t
+            uv        + (o.uv        - uv)        * t,
+            normal    + (o.normal    - normal)     * t,
+            worldPos  + (o.worldPos  - worldPos)   * t,
+            tangent   + (o.tangent   - tangent)    * t,
+            bitangent + (o.bitangent - bitangent)  * t
         };
     }
 
     VertexAttributes operator*(NumericT s) const {
-        return VertexAttributes{uv * s, normal * s, worldPos * s};
+        return VertexAttributes{uv * s, normal * s, worldPos * s, tangent * s, bitangent * s};
     }
 
     VertexAttributes operator+(const VertexAttributes& o) const {
-        return VertexAttributes{uv + o.uv, normal + o.normal, worldPos + o.worldPos};
+        return VertexAttributes{
+            uv + o.uv, normal + o.normal, worldPos + o.worldPos,
+            tangent + o.tangent, bitangent + o.bitangent
+        };
     }
 };
 
