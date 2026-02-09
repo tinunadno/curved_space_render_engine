@@ -64,10 +64,25 @@ int main()
     const char* obj1File = "/Users/yura/stuff/clion/curved_space_render_engine/model_render_core_example/cube.obj";
 
     std::vector<mrc::Model<float>> sourceModels;
+    std::vector<mrc::LightSource<float>> lights;
     sourceModels.emplace_back(mrc::readFromObjFile<float>(objFile));
     sourceModels.emplace_back(mrc::readFromObjFile<float>(obj1File,
         sc::utils::Vec<float, 3>(2., 0., 0.),
         sc::utils::Vec<float, 3>(0., 1.6, 0.)));
+
+    lights.emplace_back(
+        sc::utils::Vec<float, 3>{0.f, 10.f, 0.f},
+        sc::utils::Vec<float, 3>{0.f, -1.f, 0.f},
+        sc::utils::Vec<float, 3>{1.f, 1.f, 1.f},
+        1.f
+    );
+
+    lights.emplace_back(
+        sc::utils::Vec<float, 3>{10.f, 10.f, 0.f},
+        sc::utils::norm(sc::utils::Vec<float, 3>{-10.f, 10.f, 0.f}),
+        sc::utils::Vec<float, 3>{1.f, 1.f, 1.f},
+        1.f
+    );
 
     std::vector<std::vector<Snapshot>> snapshots(sourceModels.size());
     std::vector<std::vector<sc::utils::Vec<float, 2>>> lastRois(sourceModels.size());
@@ -138,7 +153,7 @@ int main()
         }}
     };
 
-    auto window1 = mrc::makeMrcWindow(camera1, sourceModels,
+    auto window1 = mrc::makeMrcWindow(camera1, sourceModels, lights,
         [](std::size_t, std::size_t){}, roiDrawer,
         keys1, {}, 60, "Model Viewer");
 
@@ -156,7 +171,7 @@ int main()
         conesDirty = true;
     };
 
-    auto window2 = mrc::makeMrcWindow(camera2, coneModels,
+    auto window2 = mrc::makeMrcWindow(camera2, coneModels, lights,
         coneUpdate,
         [](std::size_t, std::size_t, sc::GLFWRenderer&,
            const sc::utils::Mat<float, 4, 4>&,
@@ -216,7 +231,7 @@ int main()
         }
     };
 
-    auto window3 = mrc::makeMrcWindow(camera3, intersectionModels,
+    auto window3 = mrc::makeMrcWindow(camera3, intersectionModels, lights,
         intersectionUpdate, centerDrawer,
         {}, {}, 60, "Intersections");
 

@@ -6,11 +6,11 @@ int main() {
     camera.pos()[2] = 2.0f;
     camera.setLen(0.3);
     camera.setRes(sc::utils::Vec<float, 2>{1000, 800});
-    const char* objFile = "/Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example/plane.obj";
+    const char* obj1File = "/Users/yura/stuff/clion/curved_space_render_engine/mrc_texture_example/objects/rock.obj";
 
     std::vector<mrc::Model<float>> models;
     std::vector<mrc::LightSource<float>> ls;
-    models.emplace_back(mrc::io::readFromObjFile<float>(objFile));
+    models.emplace_back(mrc::io::readFromObjFile<float>(obj1File));
     ls.emplace_back(
         sc::utils::Vec<float, 3>{0.f, 1.3f, 0.f},
         sc::utils::Vec<float, 3>{0.f, -1.f, 0.f},

@@ -271,7 +271,7 @@ template<typename NumericT,
     typename MakeShader = internal::DefaultShaderFactory<NumericT>>
 void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
                    const std::vector<Model<NumericT>>& models,
-                   const std::vector<LightSource<NumericT>>& lights = {},
+                   const std::vector<LightSource<NumericT>>& lights,
                    EachFrameModelUpdate efmu = { },
                    CustomDrawer cd = { },
                    const std::vector<std::pair<int, std::function<void()>>>& customKeyHandlers = {},
@@ -336,7 +336,6 @@ void initMrcRender(sc::Camera<NumericT, sc::VecArray>& camera,
 }
 
 
- // TODO move lights to the beginning in all examples
 template<typename NumericT,
     typename EachFrameModelUpdate = decltype([](std::size_t, std::size_t){ }),
     typename CustomDrawer =
@@ -345,13 +344,13 @@ template<typename NumericT,
     typename MakeShader = internal::DefaultShaderFactory<NumericT>>
 auto makeMrcWindow(sc::Camera<NumericT, sc::VecArray>& camera,
                    const std::vector<Model<NumericT>>& models,
+                   const std::vector<LightSource<NumericT>>& lights,
                    EachFrameModelUpdate efmu = { },
                    CustomDrawer cd = { },
                    const std::vector<std::pair<int, std::function<void()>>>& customKeyHandlers = {},
                    sc::utils::Vec<int, 2> windowResolution = sc::utils::Vec<int, 2>{-1, -1},
                    unsigned int targetFrameRateMs = 60,
                    const char* title = "Model Renderer",
-                   const std::vector<LightSource<NumericT>>& lights = {LightSource<NumericT>{}},
                    MakeShader makeShader = { })
 {
     using Mat4 = sc::utils::Mat<NumericT, 4, 4>;
@@ -364,7 +363,8 @@ auto makeMrcWindow(sc::Camera<NumericT, sc::VecArray>& camera,
         )
     );
 
-    auto ff = [&models, &camera, zBuffer, &lights,
+    auto ff = [&models, &camera, zBuffer,
+               &lights,
                efmu = std::move(efmu), cd = std::move(cd),
                makeShader = std::move(makeShader)](
         sc::GLFWRenderer& renderer, std::size_t frame, std::size_t time) mutable
