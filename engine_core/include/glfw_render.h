@@ -309,10 +309,6 @@ private:
 
         std::sort(self->_pressedKeys.begin(), self->_pressedKeys.end());
 
-        for (const auto key_ : self->_pressedKeys)
-            std::cout << key_ << " ";
-        std::cout << std::endl;
-
         auto itCombo = self->_comboHandlers.find(self->_pressedKeys);
         if (itCombo == self->_comboHandlers.end()) return;
         itCombo->second();
